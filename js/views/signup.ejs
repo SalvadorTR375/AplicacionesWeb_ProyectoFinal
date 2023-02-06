@@ -26,16 +26,21 @@
                 </div>
                         
                 <div class="col-md-6 main">
-                            
+                    
+                    <!--Este es nuestro formulario para registrar al nuevo usuario-->
+                    <!--La accion mandara la informacion a la ruta '/sign_up'-->
                     <form action="/sign_up" method="post">
                             
                     <h1> Sign Up Form :) </h1>
                                     
-                    <input class="box" type="text" name="name" id="name"
-                    placeholder="Name" required /><br>
+                    <input class="box" type="text" name="firstname" id="name"
+                    placeholder="First Name " required /><br>
+
+                    <input class="box" type="text" name="secondname" id="name2"
+                    placeholder="Second Name " required /><br>
                                     
                     <input class="box" type="email" name="email" id="email"
-                    placeholder="E-Mail " required /><br>
+                    placeholder="E-mail " required /><br>
                                     
                     <input class="box" type="password" name="password"
                     id="password" placeholder="Password " required/><br>

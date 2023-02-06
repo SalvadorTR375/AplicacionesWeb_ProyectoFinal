@@ -1,9 +1,12 @@
-let {Schema, model} = require("mongoose")
-let userSchema = new User({
-    name: String,
+let mongoose = require("mongoose")
+let Schema = mongoose.Schema
+
+let userSchema = Schema({
+    firstname: String,
+    secondname: String,
     email: String,
-    password: password,
+    password: String,
     phonenumber: String
 })
 
-module.exports = model('User', userSchema)
+module.exports = mongoose.model('users', userSchema)

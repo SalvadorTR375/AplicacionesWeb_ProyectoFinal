@@ -1,51 +1,38 @@
 // Inicializar letiables para que corran las librerias
 
-let express=require("express");
-let bodyParser=require("body-parser");
-  
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/gfg');
-let db=mongoose.connection;
-db.on('error', console.log.bind(console, "connection error"));
-db.once('open', function(callback){
-    console.log("connection succeeded");
+let express = require("express");
+let mongoose = require('mongoose');
+
+let app = express()
+
+let indexRoutes = require("../routes/routeindex") // Para importar las rutas
+
+mongoose.set('strictQuery', true) // Con esta linea quitamos el mensaje de WARNING
+
+// Conectarse a MongoDB
+mongoose.connect('mongodb://127.0.0.1:27017/users') // la db se llama 'users'
+    .then(db => console.log('database is connected'))
+    .catch(err => console.log(err));
+
+app.set("view engine", "ejs") // Temas de los middlewares
+
+app.use(express.urlencoded({extended:false})) // Necesitamos esta linea porque los datos los vamos a dar de alta desde un formulario
+app.use(express.json()) // Se usa si fueramos a generar un obj .json y se lo fueramos a mandar como un POST
+
+/* La linea de abajo se usa de esta manera porque :
+
+*/
+
+app.use("/", indexRoutes); // Todo lo que vaya a la ruta home '/', utilizara estas rutas
+
+// Para empezar a escuchar
+app.listen(3000, ()=>{
+    console.log(" Server is now online in port 3000 :D ")
 })
-  
-let app=express()
-  
-  
-app.use(bodyParser.json());
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-  
-app.post('/sign_up', function(req,res){
-    let name = req.body.name;
-    let email =req.body.email;
-    let pass = req.body.password;
-    let phone =req.body.phone;
-  
-    let data = {
-        "name": name,
-        "email":email,
-        "password":pass,
-        "phone":phone
-    }
-db.collection('details').insertOne(data,function(err, collection){
-        if (err) throw err;
-        console.log("Record inserted Successfully");
-              
-    });
-          
-    return res.redirect('signup_success.html');
-})
-  
-  
-app.get('/',function(req,res){
-return res.redirect('index.html');
-}).listen(3000)
-  
-  
-console.log("server listening at port 3000");
+
+/* (1:00:30) => "Podemos generar de una vez las rutas. Tip: las rutas las podemos
+                definir en este mismo archivo 'app.js', pero lo que se recomienda
+                es que app.js solo contenga lo indispensable (importaciones,
+                configuraciones, etc), y que las rutas las tengas separadas en un
+                archivo aparte en una carpeta llamada 'routes' */
 
