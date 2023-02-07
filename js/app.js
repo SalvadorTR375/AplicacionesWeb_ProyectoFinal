@@ -3,7 +3,12 @@
 let express = require("express");
 let mongoose = require('mongoose');
 
+let cookieParser = require("cookie-parser");
+let dotenv = require("dotenv");
+
 let app = express()
+
+dotenv.config(); // Busca un archivo .env y hace disponible su info dentro del sistema
 
 let indexRoutes = require("../routes/routeindex") // Para importar las rutas
 
@@ -19,9 +24,8 @@ app.set("view engine", "ejs") // Temas de los middlewares
 app.use(express.urlencoded({extended:false})) // Necesitamos esta linea porque los datos los vamos a dar de alta desde un formulario
 app.use(express.json()) // Se usa si fueramos a generar un obj .json y se lo fueramos a mandar como un POST
 
-/* La linea de abajo se usa de esta manera porque :
-
-*/
+// Para la parte de autenticacion de usuarios
+app.use(cookieParser()) // Para que el servidor pueda entender la estructura de las cookies
 
 app.use("/", indexRoutes); // Todo lo que vaya a la ruta home '/', utilizara estas rutas
 

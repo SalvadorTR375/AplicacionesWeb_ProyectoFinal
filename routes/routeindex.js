@@ -10,6 +10,12 @@ let router = express()  // Instancia de express
 // Tengo que importar el Schema de 'Users'
 let User = require("../models/User")
 
+// Middleware
+let verify = require("../middleware/verifyAccess")
+
+let bcrypt = require("bcrypt"); // Para poder encriptar/ generar un hash, a la contraseña
+let jwt = require("jsonwebtoken"); // Para generar un token
+
 // Ruta 'get' para ir a la home page
 router.get("/", async function(req, res){
     res.render("index")
