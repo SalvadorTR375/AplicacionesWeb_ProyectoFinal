@@ -17,7 +17,7 @@ router.get("/", async function(req, res){
 
 // Ruta 'get' para ir a la pagina de 'sign up'
 router.get("/sign_up", async function(req, res){
-    res.render("sign_up2");
+    res.render("sign_up");
 });
 
 // Para enviarle datos al server, es por medio de un POST
@@ -29,7 +29,7 @@ router.post("/sign_up", async function(req, res){ // async sirve para que el cod
     
     let user = new User(req.body)
     await user.save()
-    res.redirect("/")
+    res.redirect("/sign_in")
 })
 
 // Ruta 'get' para ir a la pagina de 'sign in'
